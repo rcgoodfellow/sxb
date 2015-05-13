@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<definitions name="example"
+  targetNamespace="http://www.example.com/foo.wsdl"
+  xmlns:tns="http://www.example.com/foo.wsdl"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns="http://schemas.xmlsoap.org/wsdl/"
+>
+
+ <message name="BazMessage">
+   <part name="BazRequestBody" type="xsd:int" />
+ </message>
+
+ <portType name="bazPortType">
+   <operation name="Baz">
+     <input message="tns:BazMessage"/>
+   </operation>
+ </portType>
+
+ <binding name="fooBinding" type="tns:bazPortType">
+   <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+   <operation name="Baz">
+     <soap:operation soapAction="Baz" />
+     <input>
+       <soap:body use="literal" parts="tns:BazRequestBody"
+         namespace="http://www.example.com/foo.wsdl"
+ 	       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+     </input>
+   </operation>
+ </binding>
+
+ <service name="fooService">
+   <port name="fooPort" binding="tns:fooBinding">
+     <soap:address location="http://www.example.com/foo" />
+   </port>
+ </service>
+
+</definitions>
